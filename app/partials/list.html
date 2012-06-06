@@ -1,0 +1,7 @@
+<div>
+  <ul>
+    <li ng-repeat="task in tasks|filter:$location.search().s">
+      {{ task.text }}
+    </li>
+  </ul>
+</div>
