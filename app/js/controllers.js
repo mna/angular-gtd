@@ -26,12 +26,16 @@ AppCtrl.$inject = ['$scope']
 function ListCtrl($scope, $location, $filter) {
   var srch = $location.search()
 
-  $scope.filteredTasks = $filter('filter')($scope.tasks, function(task) {
-    var s
+  if (srch && srch.s) {
+    $scope.currentList = decodeURIComponent(srch.s)
+  } else {
+    $scope.currentList = ''
+  }
 
-    if (srch && srch.s) {
-      s = decodeURIComponent(srch.s)
-      return (task.folders.indexOf(s) >= 0) || (task.contexts.indexOf(s) >= 0)
+  $scope.filteredTasks = $filter('filter')($scope.tasks, function(task) {
+    if ($scope.currentList) {
+      return (task.folders.indexOf($scope.currentList) >= 0) ||
+        (task.contexts.indexOf($scope.currentList) >= 0)
     }
 
     return true
@@ -82,9 +86,22 @@ function EditCtrl($scope) {
 
 EditCtrl.$inject = ['$scope']
 
-function MenuCtrl($scope) {
+function MenuCtrl($scope, $location) {
   var foldersCache,
     contextsCache
+
+  $scope.getActiveClass = function(frag) {
+    var ret = ''
+    if (frag === 'new' && $location.hash() === '/new') {
+      ret = 'active'
+    } else if (frag === 'all' && $location.hash() === '#/list' && !($location.search())) {
+      ret = 'active'
+    } else if ($location.search().s === frag) {
+      ret = 'active'
+    }
+
+    return ret
+  }
 
   var getUniqueItems = function(arTasks, arProp) {
     var res = []
@@ -130,4 +147,4 @@ function MenuCtrl($scope) {
   }
 }
 
-MenuCtrl.$inject = ['$scope']
+MenuCtrl.$inject = ['$scope', '$location']
