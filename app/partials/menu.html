@@ -1,0 +1,11 @@
+<div class="well sidebar-nav" ng-controller="MenuCtrl">
+  <ul class="nav nav-list" >
+    <li class="active"><a  href="#/new">New</a></li>
+    <li ng-repeat="folder in getUniqueFolders()">
+      {{ folder }}
+    </li>
+    <li ng-repeat="context in getUniqueContexts()">
+      {{ context }}
+    </li>
+  </ul>
+</div>
