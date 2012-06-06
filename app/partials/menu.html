@@ -1,6 +1,7 @@
 <div class="well sidebar-nav" ng-controller="MenuCtrl">
   <ul class="nav nav-list" >
     <li class="active"><a  href="#/new">New</a></li>
+    <li class="active"><button ng-click="test()">test</button> </li>
     <li ng-repeat="folder in getUniqueFolders()">
       {{ folder }}
     </li>

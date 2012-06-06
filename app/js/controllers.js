@@ -61,7 +61,7 @@ function EditCtrl($scope) {
 
 EditCtrl.$inject = ['$scope']
 
-function MenuCtrl($scope) {
+function MenuCtrl($scope, $location) {
   var foldersCache,
     contextsCache
 
@@ -82,6 +82,10 @@ function MenuCtrl($scope) {
     return res.sort()
   }
 
+  $scope.test = function() {
+    console.log($location.search())
+  }
+  
   $scope.getUniqueFolders = function() {
     if ($scope.tasks.isDirty || !foldersCache) {
       // Set both folders and contexts to null so that they are re-computed, and remove isDirty
@@ -109,4 +113,4 @@ function MenuCtrl($scope) {
   }
 }
 
-MenuCtrl.$inject = ['$scope']
+MenuCtrl.$inject = ['$scope', '$location']
