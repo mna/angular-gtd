@@ -1,6 +1,6 @@
 <div>
   <ul>
-    <li ng-repeat="task in tasks|filter:$location.search().s">
+    <li ng-repeat="task in filteredTasks">
       {{ task.text }}
     </li>
   </ul>

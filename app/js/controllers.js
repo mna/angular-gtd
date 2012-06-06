@@ -13,15 +13,32 @@ function AppCtrl($scope) {
     folders: ['#nextaction', '#project'],
     contexts: ['@work'],
     done: false
+  }, {
+    text: 'Voici un troisième task',
+    folders: ['#collect', '#project'],
+    contexts: ['@work', '@home'],
+    done: false
   }]
 }
 
 AppCtrl.$inject = ['$scope']
 
-function ListCtrl($scope) {
+function ListCtrl($scope, $location, $filter) {
+  var srch = $location.search()
 
+  $scope.filteredTasks = $filter('filter')($scope.tasks, function(task) {
+    var s
+
+    if (srch && srch.s) {
+      s = decodeURIComponent(srch.s)
+      return (task.folders.indexOf(s) >= 0) || (task.contexts.indexOf(s) >= 0)
+    }
+
+    return true
+  })
 }
-ListCtrl.$inject = ['$scope']
+
+ListCtrl.$inject = ['$scope', '$location', '$filter']
 
 function EditCtrl($scope) {
   var rxFolders = /(?:^|\s)(#[^\s]+)/g,
@@ -37,8 +54,10 @@ function EditCtrl($scope) {
   }
 
   $scope.clearItem = function() {
-    this.new.task = ''
-    this.new.tags = ''
+    if (this.new) {
+      this.new.task = ''
+      this.new.tags = ''
+    }
   }
 
   $scope.addItem = function() {
@@ -47,21 +66,23 @@ function EditCtrl($scope) {
         contexts: [],
         done: false
       }
-      
-    newItem.text = this.new.task
 
-    parseTags(rxFolders, this.new.tags, newItem.folders)
-    parseTags(rxCtxs, this.new.tags, newItem.contexts)
+    if (this.new && this.new.task) {
+      newItem.text = this.new.task
 
-    this.tasks.push(newItem)
-    this.tasks.isDirty = true
-    this.clearItem()
+      parseTags(rxFolders, this.new.tags, newItem.folders)
+      parseTags(rxCtxs, this.new.tags, newItem.contexts)
+
+      this.tasks.push(newItem)
+      this.tasks.isDirty = true
+      this.clearItem()
+    }
   }
 }
 
 EditCtrl.$inject = ['$scope']
 
-function MenuCtrl($scope, $location) {
+function MenuCtrl($scope) {
   var foldersCache,
     contextsCache
 
@@ -82,10 +103,6 @@ function MenuCtrl($scope, $location) {
     return res.sort()
   }
 
-  $scope.test = function() {
-    console.log($location.search())
-  }
-  
   $scope.getUniqueFolders = function() {
     if ($scope.tasks.isDirty || !foldersCache) {
       // Set both folders and contexts to null so that they are re-computed, and remove isDirty
@@ -113,4 +130,4 @@ function MenuCtrl($scope, $location) {
   }
 }
 
-MenuCtrl.$inject = ['$scope', '$location']
+MenuCtrl.$inject = ['$scope']
