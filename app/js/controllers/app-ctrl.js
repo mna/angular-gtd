@@ -4,7 +4,7 @@ function AppCtrl($scope) {
 
   $scope.tasks = [{
     text: 'First task',
-    folders: ['#collect', '#nextaction'],
+    folders: ['#collect', '#nextaction', '#someday', '#garbage'],
     contexts: ['@work'],
     done: false
   }]
