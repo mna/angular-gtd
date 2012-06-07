@@ -1,12 +1,8 @@
 <div class="well sidebar-nav" ng-controller="MenuCtrl">
   <ul class="nav nav-list" >
-    <li ng-click="setActive($event)"><a href="#/new">New</a></li>
-    <li ng-click="setActive($event)"><a href="#/list">All</a></li>
-    <li ng-repeat="folder in getUniqueFolders()" ng-click="setActive($event)">
-      <a href="#/list?s={{ folder | encodeURI }}">{{ folder }}</a>
-    </li>
-    <li ng-repeat="context in getUniqueContexts()" ng-click="setActive($event)">
-      <a href="#/list?s={{ context | encodeURI }}">{{ context }}</a>
-    </li>
+    <li><a href="#/list">All</a></li>
+    <li><a href="#/list?s=%23collect">#collect</a></li>
+    <li><a href="#/list?s=%23nextaction">#nextaction</a></li>
+    <li><a href="#/list?s=@work">@work</a></li>
   </ul>
 </div>

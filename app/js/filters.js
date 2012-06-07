@@ -1,4 +1,4 @@
-/*globals angular, _*/
+/*globals angular*/
 /*jshint asi:true,trailing:true*/
 
 function tagFilter($location) {
@@ -31,11 +31,4 @@ function tagFilter($location) {
 tagFilter.$inject = ['$location']
 
 angular.module('gtd.filters', [])
-  .filter('encodeURI', function() {
-    'use strict';
-
-    return function(input) {
-      return encodeURIComponent(input)
-    }
-  })
   .filter('tagFilter', tagFilter)
