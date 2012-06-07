@@ -1,6 +1,6 @@
 <div>
   <ul>
-    <li ng-repeat="task in filteredTasks">
+    <li ng-repeat="task in tasks|tagFilter">
       {{ task.text }}
     </li>
   </ul>
