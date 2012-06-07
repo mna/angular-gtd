@@ -36,7 +36,7 @@
         
       <div class="span6">
         <ul>
-          <li ng-repeat="task in tasks|tagFilter">
+          <li ng-repeat="task in tasks|filter">
             {{ task.text }}
           </li>
         </ul>
@@ -51,6 +51,5 @@
   <script src="js/controllers/app-ctrl.js"></script>
   <script src="js/controllers/list-ctrl.js"></script>
   <script src="js/controllers/menu-ctrl.js"></script>
-  <script src="js/filters.js"></script>
 </body>
 </html>

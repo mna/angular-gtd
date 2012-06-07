@@ -9051,7 +9051,9 @@ function $FilterProvider($provide) {
    </doc:example>
  */
 function filterFilter() {
+  var z = 0
   return function(array, expression) {
+    console.log("filtering " + ++z)
     if (!(array instanceof Array)) return array;
     var predicates = [];
     predicates.check = function(value) {
